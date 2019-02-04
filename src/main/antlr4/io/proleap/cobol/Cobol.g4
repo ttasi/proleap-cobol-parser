@@ -46,25 +46,25 @@ identificationDivisionBody
 // - program id paragraph ----------------------------------
 
 programIdParagraph
-   : PROGRAM_ID DOT_FS programName (IS? (COMMON | INITIAL | LIBRARY | DEFINITION | RECURSIVE) PROGRAM?)? DOT_FS? commentEntry?
+   : PROGRAM_ID DOT_FS? programName (IS? (COMMON | INITIAL | LIBRARY | DEFINITION | RECURSIVE) PROGRAM?)? DOT_FS? commentEntry?
    ;
 
 // - author paragraph ----------------------------------
 
 authorParagraph
-   : AUTHOR DOT_FS commentEntry?
+   : AUTHOR DOT_FS? commentEntry?
    ;
 
 // - installation paragraph ----------------------------------
 
 installationParagraph
-   : INSTALLATION DOT_FS commentEntry?
+   : INSTALLATION DOT_FS? commentEntry?
    ;
 
 // - date written paragraph ----------------------------------
 
 dateWrittenParagraph
-   : DATE_WRITTEN DOT_FS commentEntry?
+   : DATE_WRITTEN DOT_FS? commentEntry?
    ;
 
 // - date compiled paragraph ----------------------------------
@@ -76,7 +76,7 @@ dateCompiledParagraph
 // - security paragraph ----------------------------------
 
 securityParagraph
-   : SECURITY DOT_FS commentEntry?
+   : SECURITY DOT_FS? commentEntry?
    ;
 
 // - remarks paragraph ----------------------------------
@@ -423,7 +423,7 @@ recordContainsTo
    ;
 
 labelRecordsClause
-   : LABEL (RECORD IS? | RECORDS ARE?) (OMITTED | STANDARD | dataName+)
+   : LABEL (RECORD | RECORDS) (IS | ARE)? (OMITTED | STANDARD | dataName+)
    ;
 
 valueOfClause
@@ -435,7 +435,7 @@ valuePair
    ;
 
 dataRecordsClause
-   : DATA (RECORD IS? | RECORDS ARE?) dataName+
+   : DATA (RECORD | RECORDS) (IS | ARE)? dataName+
    ;
 
 linageClause
@@ -471,7 +471,7 @@ codeSetClause
    ;
 
 reportClause
-   : (REPORT IS? | REPORTS ARE?) reportName+
+   : (REPORT | REPORTS) (IS | ARE)? reportName+
    ;
 
 // -- data base section ----------------------------------
@@ -1157,7 +1157,7 @@ paragraph
    ;
 
 sentence
-   : statement* DOT_FS
+   : statement* (DOT_FS | DOT)
    ;
 
 statement
@@ -1593,7 +1593,7 @@ inspectReplacingCharacters
    ;
 
 inspectAllLeadings
-   : (ALL | LEADING) inspectAllLeading+
+   : (ALL | LEADING) inspectAllLeading (COMMACHAR? inspectAllLeading)*
    ;
 
 inspectReplacingAllLeadings
@@ -2145,7 +2145,7 @@ unstringOrAllPhrase
    ;
 
 unstringIntoPhrase
-   : INTO unstringInto+
+   : INTO unstringInto (COMMACHAR? unstringInto)*
    ;
 
 unstringInto
@@ -2578,7 +2578,7 @@ cobolWord
    | ODT | ORDERLY | OVERLINE | OWN
    | PASSWORD | PORT | PRINTER | PRIVATE | PROCESS | PROGRAM | PROMPT
    | READER | REAL | RECEIVED | RECURSIVE | REF | REMOTE | REMOVE | REQUIRED | REVERSE_VIDEO
-   | SAVE | SECURE | SHARED | SHAREDBYALL | SHAREDBYRUNUNIT | SHARING | SHORT_DATE | SQL | SYMBOL
+   | SAVE | SECURE | SCREEN | SHARED | SHAREDBYALL | SHAREDBYRUNUNIT | SHARING | SHORT_DATE | SQL | SYMBOL
    | TASK | THREAD | THREAD_LOCAL | TIMER | TODAYS_DATE | TODAYS_NAME | TRUNCATED | TYPEDEF
    | UNDERLINE
    | VIRTUAL
