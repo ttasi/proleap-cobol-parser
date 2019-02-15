@@ -199,11 +199,11 @@ classClauseThrough
    ;
 
 classClauseFrom
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 classClauseTo
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 currencySignClause
@@ -655,7 +655,7 @@ screenDescriptionPictureClause
    ;
 
 screenDescriptionFromClause
-   : FROM (identifier | literal) screenDescriptionToClause?
+   : FROM identifierOrLiteral screenDescriptionToClause?
    ;
 
 screenDescriptionToClause
@@ -695,7 +695,7 @@ screenDescriptionRequiredClause
    ;
 
 screenDescriptionPromptClause
-   : PROMPT CHARACTER? IS? (identifier | literal) screenDescriptionPromptOccursClause?
+   : PROMPT CHARACTER? IS? identifierOrLiteral screenDescriptionPromptOccursClause?
    ;
 
 screenDescriptionPromptOccursClause
@@ -949,8 +949,12 @@ dataDescriptionEntry
    ;
 
 dataDescriptionEntryFormat1
-   : (INTEGERLITERAL | LEVEL_NUMBER_77) (FILLER | dataName)? (dataRedefinesClause | dataIntegerStringClause | dataExternalClause | dataGlobalClause | dataTypeDefClause | dataThreadLocalClause | dataPictureClause | dataCommonOwnLocalClause | dataTypeClause | dataUsingClause | dataUsageClause | dataValueClause | dataReceivedByClause | dataOccursClause | dataSignClause | dataSynchronizedClause | dataJustifiedClause | dataBlankWhenZeroClause | dataWithLowerBoundsClause | dataAlignedClause | dataRecordAreaClause)* DOT_FS
+   : levelNumber=(INTEGERLITERAL | LEVEL_NUMBER_77) (FILLER | dataName)? dataDescriptionEntryFormat1Clause* DOT_FS
    ;
+
+dataDescriptionEntryFormat1Clause
+	: dataRedefinesClause | dataIntegerStringClause | dataExternalClause | dataGlobalClause | dataTypeDefClause | dataThreadLocalClause | dataPictureClause | dataCommonOwnLocalClause | dataTypeClause | dataUsingClause | dataUsageClause | dataValueClause | dataReceivedByClause | dataOccursClause | dataSignClause | dataSynchronizedClause | dataJustifiedClause | dataBlankWhenZeroClause | dataWithLowerBoundsClause | dataAlignedClause | dataRecordAreaClause
+	;
 
 dataDescriptionEntryFormat2
    : LEVEL_NUMBER_66 dataName dataRenamesClause DOT_FS
@@ -1205,7 +1209,7 @@ addCorrespondingStatement
    ;
 
 addFrom
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 addTo
@@ -1213,7 +1217,7 @@ addTo
    ;
 
 addToGiving
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 addGiving
@@ -1239,7 +1243,7 @@ alterProceedTo
 // call statement
 
 callStatement
-   : CALL (identifier | literal) callUsingPhrase? callGivingPhrase? onOverflowPhrase? onExceptionClause? notOnExceptionClause? END_CALL?
+   : CALL identifierOrLiteral callUsingPhrase? callGivingPhrase? onOverflowPhrase? onExceptionClause? notOnExceptionClause? END_CALL?
    ;
 
 callUsingPhrase
@@ -1263,7 +1267,7 @@ callByValuePhrase
    ;
 
 callByValue
-   : (ADDRESS OF | LENGTH OF?)? (identifier | literal)
+   : (ADDRESS OF | LENGTH OF?)? identifierOrLiteral
    ;
 
 callByContentPhrase
@@ -1351,7 +1355,7 @@ deleteStatement
 // disable statement
 
 disableStatement
-   : DISABLE (INPUT TERMINAL? | I_O TERMINAL | OUTPUT) cdName WITH? KEY (identifier | literal)
+   : DISABLE (INPUT TERMINAL? | I_O TERMINAL | OUTPUT) cdName WITH? KEY identifierOrLiteral
    ;
 
 // display statement
@@ -1361,11 +1365,11 @@ displayStatement
    ;
 
 displayOperand
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 displayAt
-   : AT (identifier | literal)
+   : AT identifierOrLiteral
    ;
 
 displayUpon
@@ -1379,7 +1383,7 @@ displayWith
 // divide statement
 
 divideStatement
-   : DIVIDE (identifier | literal) (divideIntoStatement | divideIntoGivingStatement | divideByGivingStatement) divideRemainder? onSizeErrorPhrase? notOnSizeErrorPhrase? END_DIVIDE?
+   : DIVIDE identifierOrLiteral (divideIntoStatement | divideIntoGivingStatement | divideByGivingStatement) divideRemainder? onSizeErrorPhrase? notOnSizeErrorPhrase? END_DIVIDE?
    ;
 
 divideIntoStatement
@@ -1387,11 +1391,11 @@ divideIntoStatement
    ;
 
 divideIntoGivingStatement
-   : INTO (identifier | literal) divideGivingPhrase?
+   : INTO identifierOrLiteral divideGivingPhrase?
    ;
 
 divideByGivingStatement
-   : BY (identifier | literal) divideGivingPhrase?
+   : BY identifierOrLiteral divideGivingPhrase?
    ;
 
 divideGivingPhrase
@@ -1489,7 +1493,7 @@ exhibitStatement
    ;
 
 exhibitOperand
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 // exit statement
@@ -1577,7 +1581,7 @@ inspectTallyingReplacingPhrase
    ;
 
 inspectConvertingPhrase
-   : CONVERTING (identifier | literal) inspectTo inspectBeforeAfter*
+   : CONVERTING identifierOrLiteral inspectTo inspectBeforeAfter*
    ;
 
 inspectFor
@@ -1601,23 +1605,23 @@ inspectReplacingAllLeadings
    ;
 
 inspectAllLeading
-   : (identifier | literal) inspectBeforeAfter*
+   : identifierOrLiteral inspectBeforeAfter*
    ;
 
 inspectReplacingAllLeading
-   : (identifier | literal) inspectBy inspectBeforeAfter*
+   : identifierOrLiteral inspectBy inspectBeforeAfter*
    ;
 
 inspectBy
-   : BY (identifier | literal)
+   : BY identifierOrLiteral
    ;
 
 inspectTo
-   : TO (identifier | literal)
+   : TO identifierOrLiteral
    ;
 
 inspectBeforeAfter
-   : (BEFORE | AFTER) INITIAL? (identifier | literal)
+   : (BEFORE | AFTER) INITIAL? identifierOrLiteral
    ;
 
 // merge statement
@@ -1673,7 +1677,7 @@ moveToStatement
    ;
 
 moveToSendingArea
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 moveCorrespondingToStatement
@@ -1687,7 +1691,7 @@ moveCorrespondingToSendingArea
 // multiply statement
 
 multiplyStatement
-   : MULTIPLY (identifier | literal) BY (multiplyRegular | multiplyGiving) onSizeErrorPhrase? notOnSizeErrorPhrase? END_MULTIPLY?
+   : MULTIPLY identifierOrLiteral BY (multiplyRegular | multiplyGiving) onSizeErrorPhrase? notOnSizeErrorPhrase? END_MULTIPLY?
    ;
 
 multiplyRegular
@@ -1703,7 +1707,7 @@ multiplyGiving
    ;
 
 multiplyGivingOperand
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 multiplyGivingResult
@@ -1719,7 +1723,11 @@ nextSentenceStatement
 // open statement
 
 openStatement
-   : OPEN (openInputStatement | openOutputStatement | openIOStatement | openExtendStatement)+
+   : OPEN openStatementSection+
+   ;
+
+openStatementSection
+   : openInputStatement | openOutputStatement | openIOStatement | openExtendStatement
    ;
 
 openInputStatement
@@ -1781,7 +1789,7 @@ performVaryingClause
    ;
 
 performVaryingPhrase
-   : (identifier | literal) performFrom performBy performUntil
+   : identifierOrLiteral performFrom performBy performUntil
    ;
 
 performAfter
@@ -1917,7 +1925,7 @@ sendStatement
    ;
 
 sendStatementSync
-   : (identifier | literal) sendFromPhrase? sendWithPhrase? sendReplacingPhrase? sendAdvancingPhrase?
+   : identifierOrLiteral sendFromPhrase? sendWithPhrase? sendReplacingPhrase? sendAdvancingPhrase?
    ;
 
 sendStatementAsync
@@ -1945,7 +1953,7 @@ sendAdvancingPage
    ;
 
 sendAdvancingLines
-   : (identifier | literal) (LINE | LINES)?
+   : identifierOrLiteral (LINE | LINES)?
    ;
 
 sendAdvancingMnemonic
@@ -1971,11 +1979,11 @@ setTo
    ;
 
 setToValue
-   : ON | OFF | ENTRY (identifier | literal) | identifier | literal
+   : ON | OFF | ENTRY identifierOrLiteral | identifier | literal
    ;
 
 setByValue
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 // sort statement
@@ -2063,7 +2071,7 @@ stringSendingPhrase
    ;
 
 stringSending
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 stringDelimitedByPhrase
@@ -2071,7 +2079,7 @@ stringDelimitedByPhrase
    ;
 
 stringForPhrase
-   : FOR (identifier | literal)
+   : FOR identifierOrLiteral
    ;
 
 stringIntoPhrase
@@ -2101,7 +2109,7 @@ subtractCorrespondingStatement
    ;
 
 subtractSubtrahend
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 subtractMinuend
@@ -2109,7 +2117,7 @@ subtractMinuend
    ;
 
 subtractMinuendGiving
-   : identifier | literal
+   : identifierOrLiteral
    ;
 
 subtractGiving
@@ -2137,11 +2145,11 @@ unstringSendingPhrase
    ;
 
 unstringDelimitedByPhrase
-   : DELIMITED BY? ALL? (identifier | literal)
+   : DELIMITED BY? ALL? identifierOrLiteral
    ;
 
 unstringOrAllPhrase
-   : OR ALL? (identifier | literal)
+   : OR ALL? identifierOrLiteral
    ;
 
 unstringIntoPhrase
@@ -2197,7 +2205,7 @@ writeStatement
    ;
 
 writeFromPhrase
-   : FROM (identifier | literal)
+   : FROM identifierOrLiteral
    ;
 
 writeAdvancingPhrase
@@ -2209,7 +2217,7 @@ writeAdvancingPage
    ;
 
 writeAdvancingLines
-   : (identifier | literal) (LINE | LINES)?
+   : identifierOrLiteral (LINE | LINES)?
    ;
 
 writeAdvancingMnemonic
@@ -2359,6 +2367,10 @@ abbreviation
    ;
 
 // identifier ----------------------------------
+
+identifierOrLiteral
+   : identifier | literal
+   ;
 
 identifier
    : qualifiedDataName | tableCall | functionCall | specialRegister
